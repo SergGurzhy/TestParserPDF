@@ -2,13 +2,15 @@ import json
 import re
 from datetime import datetime
 import os
+from typing import Iterable
+
 import fitz
 from dateutil import parser
 from pdfminer.high_level import extract_pages
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfpage import PDFPage
-from pdfminer.layout import LTTextBoxHorizontal
+from pdfminer.layout import LTTextBoxHorizontal, LTTextContainer, LTChar
 
 """
 Каждый из приведенных выше типов имеет .bboxсвойство, которое содержит кортеж ( x0 , y0 , x1 , y1 ), 
@@ -126,7 +128,7 @@ def extract_words_details(pdf_path):
     return text_details
 
 
-def get_pdf_page_size(pdf_path):
+def get_pdf_page_size(pdf_path) -> tuple:
     with open(pdf_path, 'rb') as fp:
         parser = PDFParser(fp)
         document = PDFDocument(parser)
@@ -137,9 +139,68 @@ def get_pdf_page_size(pdf_path):
             if mediabox:
                 width = mediabox[2] - mediabox[0]
                 height = mediabox[3] - mediabox[1]
-                return (width, height)
+                return width, height
 
     return None
+
+
+def extract_text_with_font_details(pdf_path):
+    page_texts = []
+
+    for page_layout in extract_pages(pdf_path):
+        for element in page_layout:
+            if isinstance(element, LTTextContainer):
+                for text_line in element:
+                    if isinstance(text_line, Iterable):
+                        for character in text_line:
+                            if isinstance(character, LTChar):  # Проверяем, что элемент - это символ (LTChar)
+                                text = character.get_text()
+                                x0, y0, x1, y1 = character.bbox
+                                font_name = character.fontname
+                                font_size = character.size
+
+                                # Сохраняем текст, координаты и атрибуты шрифта
+                                page_texts.append({
+                                    'text': text,
+                                    'x0': x0,
+                                    'y0': y0,
+                                    'x1': x1,
+                                    'y1': y1,
+                                    'font_name': font_name,
+                                    'font_size': font_size
+                                })
+                    else:
+                        print(f"NOT ITERABLE: {text_line}")
+    return page_texts
+
+
+def group_characters_into_words_and_lines(text_with_font_details):
+    # Сортируем символы по вертикальной координате `y0`, а затем по горизонтальной координате `x0`
+    sorted_chars = sorted(text_with_font_details, key=lambda char: (char['y0'], char['x0']))
+
+    words_lines = []
+    current_line = []
+    previous_y1 = None
+
+    for char in sorted_chars:
+        # Извлекаем координаты символа
+        x0, y0, x1, y1 = char['x0'], char['y0'], char['x1'], char['y1']
+
+        # Определяем перенос строки
+        if previous_y1 is not None and y0 > previous_y1:  # Новая строка
+            if current_line:
+                words_lines.append(''.join(current_line))
+                current_line = []
+
+        # Добавляем символ в текущую строку
+        current_line.append(char['text'])
+        previous_y1 = y1
+
+    # Добавляем последнюю строку
+    if current_line:
+        words_lines.append(''.join(current_line))
+
+    return words_lines
 
 
 def extract_data(pdf_path):
@@ -187,6 +248,11 @@ def get_key_value(text: str) -> tuple[str, str, str]:
     sep_index = text.find(':')
     key = text[:sep_index].strip() if sep_index > -1 else text.strip()
     val = text[sep_index + 1:].strip() if sep_index > -1 else ''
+
+    # line_break_index = val.find('\n')
+    # if line_break_index > -1:
+    #     val = val[:line_break_index].strip()
+
     separator = ':' if sep_index > -1 else ''
     return key, val, separator
 
@@ -202,7 +268,10 @@ def get_project_root() -> str:
 if __name__ == '__main__':
 
     # Пример использования
-    pdf_path = 'test_task_2.pdf'
+    pdf_path = 'test_task.pdf'
+    data = extract_text_with_font_details(pdf_path)
+    words_and_lines = group_characters_into_words_and_lines(data)
+
     text_blocks = extract_data(pdf_path)
     # for k in text_blocks:
     #     print(k)

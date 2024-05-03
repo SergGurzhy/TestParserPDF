@@ -24,8 +24,5 @@ class CompareTickets(unittest.TestCase):
         self.assertEqual(len(etalon_key ^ ticket_key), 0)
 
 
-
-
-
 if __name__ == '__main__':
     unittest.main()
