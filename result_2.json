@@ -1,0 +1,144 @@
+{
+  "meta_data": {
+    "sheet_size": {
+      "width": 841.92004,
+      "height": 595.32001
+    }
+  },
+  "body": {
+    "GRIFFON AVIATION SERVICES LLC": {
+      "value": "",
+      "type_value": {
+        "type": "string",
+        "pattern": ""
+      },
+      "separator": "",
+      "key_font": {
+        "font_name": "CIDFont+F1",
+        "font_size": 10.56,
+        "font_color": 0
+      },
+      "val_font": null,
+      "coordinates": {
+        "x0": 564.96,
+        "y0": 422.572
+      }
+    },
+    "PN": {
+      "value": "tst \nDESCRIPTION: PART \nLOCATION: 111 \nRECEIVER#: 9 \nEXP DATE: 13.04.2022 \nCERT SOURCE: wef \nREC.DATE: 18.04.2022 \nBATCH# : 1 \nREMARK: \nTAGGED BY:",
+      "type_value": {
+        "type": "string",
+        "pattern": ""
+      },
+      "separator": ":",
+      "key_font": {
+        "font_name": "CIDFont+F1",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "val_font": null,
+      "coordinates": {
+        "x0": 573.0,
+        "y0": 288.805
+      }
+    },
+    "Qty": {
+      "value": "1",
+      "type_value": {
+        "type": "number",
+        "pattern": "^\\d+$"
+      },
+      "separator": ":",
+      "key_font": {
+        "font_name": "CIDFont+F3",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "val_font": {
+        "font_name": "CIDFont+F3",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "coordinates": {
+        "x0": 576.0,
+        "y0": 243.445
+      }
+    },
+    "SN": {
+      "value": "123123",
+      "type_value": {
+        "type": "number",
+        "pattern": "^\\d+$"
+      },
+      "separator": ":",
+      "key_font": {
+        "font_name": "CIDFont+F1",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "val_font": {
+        "font_name": "CIDFont+F3",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "coordinates": {
+        "x0": 701.022,
+        "y0": 388.645
+      }
+    },
+    "CONDITION": {
+      "value": "FN \nUOM: EA \nPO: P101",
+      "type_value": {
+        "type": "string",
+        "pattern": ""
+      },
+      "separator": ":",
+      "key_font": {
+        "font_name": "CIDFont+F1",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "val_font": null,
+      "coordinates": {
+        "x0": 701.04,
+        "y0": 343.645
+      }
+    },
+    "MFG": {
+      "value": "efwfe \nDOM: 13.04.2022 \nLOT# : 1 \nNOTES:",
+      "type_value": {
+        "type": "string",
+        "pattern": ""
+      },
+      "separator": ":",
+      "key_font": {
+        "font_name": "CIDFont+F1",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "val_font": null,
+      "coordinates": {
+        "x0": 701.04,
+        "y0": 288.805
+      }
+    },
+    "inspection notes": {
+      "value": "",
+      "type_value": {
+        "type": "string",
+        "pattern": ""
+      },
+      "separator": "",
+      "key_font": {
+        "font_name": "CIDFont+F3",
+        "font_size": 7.56,
+        "font_color": 0
+      },
+      "val_font": null,
+      "coordinates": {
+        "x0": 705.0,
+        "y0": 274.885
+      }
+    }
+  }
+}

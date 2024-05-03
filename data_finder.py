@@ -108,13 +108,14 @@ def extract_words_details(pdf_path):
     text_blocks = page.get_text("dict")["blocks"]
 
     for block in text_blocks:
-        for line in block["lines"]:
-            for span in line["spans"]:
-                text_details[clear_word(span['text'])] = {
-                    'font_name': span['font'],
-                    'font_size': round(span['size'], 3),
-                    'font_color': span['color'],
-                }
+        if "lines" in block:
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    text_details[clear_word(span['text'])] = {
+                        'font_name': span['font'],
+                        'font_size': round(span['size'], 3),
+                        'font_color': span['color'],
+                    }
 
     pdf_document.close()
 
@@ -201,7 +202,7 @@ def get_project_root() -> str:
 if __name__ == '__main__':
 
     # Пример использования
-    pdf_path = 'test_task.pdf'
+    pdf_path = 'test_task_2.pdf'
     text_blocks = extract_data(pdf_path)
     # for k in text_blocks:
     #     print(k)
@@ -209,5 +210,5 @@ if __name__ == '__main__':
     for k, v in text_blocks.items():
         print(f"{k}: {v}")
 
-    with open('result.json', 'w') as fp:
+    with open('result_2.json', 'w') as fp:
         json.dump(text_blocks, fp)
