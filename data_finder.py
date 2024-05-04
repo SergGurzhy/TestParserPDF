@@ -1,82 +1,11 @@
 import json
-import re
-from datetime import datetime
 from typing import Iterable
-from dateutil import parser
 from pdfminer.high_level import extract_pages
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfpage import PDFPage
 from pdfminer.layout import LTTextContainer, LTChar
-from helpers.patterns import STR_PATTERNS, DATE_FORMATS
-
-
-def detect_txt_format(value: str) -> dict:
-    patterns = STR_PATTERNS
-    for pattern in patterns:
-        if bool(re.match(pattern, value)):
-            return {
-                "type": "string",
-                "pattern": pattern
-            }
-
-    return {
-        "type": 'string',
-        "pattern": ''
-    }
-
-
-def detect_date_format(value: str) -> dict:
-    date_formats = DATE_FORMATS
-    try:
-        _ = parser.parse(value, dayfirst=True)
-    except ValueError:
-        return {
-            "type": '',
-            "pattern": ''
-        }
-    else:
-        for fmt in date_formats:
-            try:
-                datetime.strptime(value, fmt)
-                return {"type": "date",
-                        "pattern": fmt}
-            except ValueError:
-                continue
-    return {
-        "type": 'string',
-        "pattern": ''
-    }
-
-
-def determine_value_type(value) -> dict:
-    if not value:
-        return {
-            "type": "string",
-            "pattern": ''
-        }
-    value = value.strip()
-
-    pattern = r"^\d+$"
-    has_only_numbers = bool(re.match(pattern, value))
-    if has_only_numbers:
-        return {
-            "type": "number",
-            "pattern": pattern
-        }
-
-    date = detect_date_format(value)
-    if date.get('pattern'):
-        return date
-
-    string = detect_txt_format(value)
-    if string:
-        return string
-
-    return {
-        "type": "string",
-        "pattern": ''
-    }
+from helpers.helpers import determine_value_type
 
 
 def get_pdf_page_size(pdf_path) -> tuple:
@@ -182,7 +111,6 @@ def get_data_from_pdf(pdf_path):
 
 
 if __name__ == '__main__':
-    # Пример использования
     pdf_path = 'test_task.pdf'
     data = get_data_from_pdf(pdf_path)
 
