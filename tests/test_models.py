@@ -1,6 +1,7 @@
 import unittest
 
-from data_finder import extract_data, get_project_root
+from data_finder import extract_data
+from helpers.helpers import get_project_root
 
 
 class CompareTickets(unittest.TestCase):

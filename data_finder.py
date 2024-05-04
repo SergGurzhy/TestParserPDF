@@ -1,34 +1,18 @@
 import json
 import re
 from datetime import datetime
-import os
 from typing import Iterable
-
-import fitz
 from dateutil import parser
 from pdfminer.high_level import extract_pages
 from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfpage import PDFPage
-from pdfminer.layout import LTTextBoxHorizontal, LTTextContainer, LTChar
-
-"""
-Каждый из приведенных выше типов имеет .bboxсвойство, которое содержит кортеж ( x0 , y0 , x1 , y1 ), 
-содержащий координаты левой, нижней, правой и верхней части объекта соответственно. 
-Координаты Y даны как расстояние от нижнего края страницы. Если вам удобнее работать с осью Y,
- идущей сверху вниз, вы можете вычесть их из высоты страницы .mediabox:
-"""
+from pdfminer.layout import LTTextContainer, LTChar
+from helpers.patterns import STR_PATTERNS, DATE_FORMATS
 
 
 def detect_txt_format(value: str) -> dict:
-    patterns = [
-        r'^[A-Z]+$',
-        r'^[A-Z ]+$',
-        r'^[a-z]+$',
-        r'^[A-Z0-9]+$',
-        r'^[a-z0-9]+$',
-        r'^[a-zA-Z0-9]+$'
-    ]
+    patterns = STR_PATTERNS
     for pattern in patterns:
         if bool(re.match(pattern, value)):
             return {
@@ -43,12 +27,7 @@ def detect_txt_format(value: str) -> dict:
 
 
 def detect_date_format(value: str) -> dict:
-    date_formats = [
-        '%d.%m.%Y',
-        '%m.%d.%Y',
-        '%Y.%m.%d',
-        '%Y.%d.%m',
-    ]
+    date_formats = DATE_FORMATS
     try:
         _ = parser.parse(value, dayfirst=True)
     except ValueError:
@@ -100,42 +79,6 @@ def determine_value_type(value) -> dict:
     }
 
 
-def clear_word(word: str) -> str:
-    word = word.strip()
-    index = word.find(':')
-    if len(word) > 1 and index > -1:
-        return word[:index]
-    return word
-
-
-def extract_words_details(pdf_path):
-    text_details = {}
-
-    pdf_document = fitz.open(pdf_path)
-    page = pdf_document[0]
-    text_details['fonts'] = page.get_fonts()
-
-    text_blocks = page.get_text("dict")["blocks"]
-
-    for block in text_blocks:
-        if "lines" in block:
-            for line in block["lines"]:
-                for span in line["spans"]:
-                    text_details[clear_word(span['text'])] = {
-                        'font_name': span['font'],
-                        'font_size': round(span['size'], 3),
-                        'font_color': span['color'],
-                    }
-
-    pdf_document.close()
-
-    for key in list(text_details.keys()):
-        if key == "":
-            del text_details[key]
-
-    return text_details
-
-
 def get_pdf_page_size(pdf_path) -> tuple:
     with open(pdf_path, 'rb') as fp:
         parser = PDFParser(fp)
@@ -152,7 +95,7 @@ def get_pdf_page_size(pdf_path) -> tuple:
     return None
 
 
-def extract_text_with_font_details(pdf_path):
+def get_data_from_pdf(pdf_path):
     data = {
         'meta_data': {},
         'body': {}
@@ -238,81 +181,10 @@ def extract_text_with_font_details(pdf_path):
     return data
 
 
-def extract_data(pdf_path):
-    data = {
-        'meta_data': {},
-        'body': {}
-    }
-
-    page_size = get_pdf_page_size(pdf_path)
-
-    if page_size is None:
-        return None
-
-    width, height = page_size
-    data['meta_data']['sheet_size'] = {
-        'width': width,
-        'height': height
-    }
-
-    page_details = extract_words_details(pdf_path)
-
-    for page_layout in extract_pages(pdf_path):
-        for element in page_layout:
-            if isinstance(element, LTTextBoxHorizontal):
-                text = element.get_text().strip()
-                x0, y0, _, _, = element.bbox
-                key, val, sep = get_key_value(text)
-
-                data['body'][key] = {
-                    'value': val,
-                    'type_value': determine_value_type(val),
-                    'type_key': determine_value_type(key),
-                    'separator': sep,
-                    'key_font': page_details.get(key),
-                    'val_font': page_details.get(val),
-                    'coordinates': {
-                        'x0': round(x0, 3),
-                        'y0': round(y0, 3),
-                    }
-                }
-
-    return data
-
-
-def get_key_value(text: str) -> tuple[str, str, str]:
-    sep_index = text.find(':')
-    key = text[:sep_index].strip() if sep_index > -1 else text.strip()
-    val = text[sep_index + 1:].strip() if sep_index > -1 else ''
-
-    # line_break_index = val.find('\n')
-    # if line_break_index > -1:
-    #     val = val[:line_break_index].strip()
-
-    separator = ':' if sep_index > -1 else ''
-    return key, val, separator
-
-
-def get_project_root() -> str:
-    current_file = os.path.abspath(__file__)
-    while not os.path.isfile(os.path.join(current_file, 'test_task.pdf')):
-        current_file = os.path.dirname(current_file)
-
-    return current_file
-
-
 if __name__ == '__main__':
     # Пример использования
     pdf_path = 'test_task.pdf'
-    data = extract_text_with_font_details(pdf_path)
+    data = get_data_from_pdf(pdf_path)
 
-    text_blocks = extract_data(pdf_path)
-
-    # for k, v in text_blocks.items():
-    #     print(f"{k}: {v}")
-    #
     with open('result_1.json', 'w') as fp:
         json.dump(data, fp)
-
-    # with open('result_1.json', 'w') as fp:
-    #     json.dump(text_blocks, fp)

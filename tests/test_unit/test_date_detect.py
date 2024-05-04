@@ -22,6 +22,9 @@ class TestDateDetect(unittest.TestCase):
     def test_6(self):
         self.assertEqual({'type': 'string', 'pattern': ''}, determine_value_type('PM1-01ol'))
 
+    def test_7(self):
+        self.assertEqual({'type': 'string', 'pattern': r'^[A-Z ]+$'}, determine_value_type('SERVICES LLC'))
+
 
 if __name__ == '__main__':
     unittest.main()
