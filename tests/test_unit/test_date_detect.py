@@ -1,5 +1,5 @@
 import unittest
-from data_finder import determine_value_type
+from helpers.helpers import determine_value_type
 
 
 class TestDateDetect(unittest.TestCase):
@@ -21,6 +21,9 @@ class TestDateDetect(unittest.TestCase):
 
     def test_6(self):
         self.assertEqual({'type': 'string', 'pattern': ''}, determine_value_type('PM1-01ol'))
+
+    def test_7(self):
+        self.assertEqual({'type': 'string', 'pattern': r'^[A-Z ]+$'}, determine_value_type('SERVICES LLC'))
 
 
 if __name__ == '__main__':
