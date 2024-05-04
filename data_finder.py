@@ -23,6 +23,7 @@ from pdfminer.layout import LTTextBoxHorizontal, LTTextContainer, LTChar
 def detect_txt_format(value: str) -> dict:
     patterns = [
         r'^[A-Z]+$',
+        r'^[A-Z ]+$',
         r'^[a-z]+$',
         r'^[A-Z0-9]+$',
         r'^[a-z0-9]+$',
@@ -33,12 +34,12 @@ def detect_txt_format(value: str) -> dict:
             return {
                 "type": "string",
                 "pattern": pattern
-                    }
+            }
 
     return {
-            "type": 'string',
-            "pattern": ''
-        }
+        "type": 'string',
+        "pattern": ''
+    }
 
 
 def detect_date_format(value: str) -> dict:
@@ -64,12 +65,19 @@ def detect_date_format(value: str) -> dict:
             except ValueError:
                 continue
     return {
-            "type": 'string',
-            "pattern": ''
-        }
+        "type": 'string',
+        "pattern": ''
+    }
 
 
 def determine_value_type(value) -> dict:
+    if not value:
+        return {
+            "type": "string",
+            "pattern": ''
+        }
+    value = value.strip()
+
     pattern = r"^\d+$"
     has_only_numbers = bool(re.match(pattern, value))
     if has_only_numbers:
@@ -145,62 +153,89 @@ def get_pdf_page_size(pdf_path) -> tuple:
 
 
 def extract_text_with_font_details(pdf_path):
-    page_texts = []
+    data = {
+        'meta_data': {},
+        'body': {}
+    }
+
+    page_size = get_pdf_page_size(pdf_path)
+
+    if page_size is None:
+        return None
+
+    width, height = page_size
+    data['meta_data']['sheet_size'] = {
+        'width': width,
+        'height': height
+    }
 
     for page_layout in extract_pages(pdf_path):
         for element in page_layout:
             if isinstance(element, LTTextContainer):
                 for text_line in element:
                     if isinstance(text_line, Iterable):
+                        key_done = False
+                        key = ''
+                        value = ''
+                        coordinates = {}
+                        separator = ''
+                        key_font_info = {
+                            'font_name': set(),
+                            'font_size': set(),
+                        }
+                        val_font_info = {
+                            'font_name': set(),
+                            'font_size': set(),
+                        }
+                        index = 0
                         for character in text_line:
-                            if isinstance(character, LTChar):  # Проверяем, что элемент - это символ (LTChar)
-                                text = character.get_text()
-                                x0, y0, x1, y1 = character.bbox
-                                font_name = character.fontname
-                                font_size = character.size
+                            if isinstance(character, LTChar):
+                                if index == 0:
+                                    x0, y0, _, _ = character.bbox
+                                    coordinates['x0'] = str(round(x0, 3))
+                                    coordinates['y0'] = str(round(y0, 3))
 
-                                # Сохраняем текст, координаты и атрибуты шрифта
-                                page_texts.append({
-                                    'text': text,
-                                    'x0': x0,
-                                    'y0': y0,
-                                    'x1': x1,
-                                    'y1': y1,
-                                    'font_name': font_name,
-                                    'font_size': font_size
-                                })
-                    else:
-                        print(f"NOT ITERABLE: {text_line}")
-    return page_texts
+                                char = character.get_text()
+                                if char != ':' and not key_done:
+                                    key += char
+                                    key_font_info['font_name'].add(character.fontname)
+                                    key_font_info['font_size'].add(character.size)
 
+                                if char == ':' and not key_done:
+                                    separator += char
+                                    key_done = True
 
-def group_characters_into_words_and_lines(text_with_font_details):
-    # Сортируем символы по вертикальной координате `y0`, а затем по горизонтальной координате `x0`
-    sorted_chars = sorted(text_with_font_details, key=lambda char: (char['y0'], char['x0']))
+                                if char != ':' and key_done:
+                                    value += char
+                                    val_font_info['font_name'].add(character.fontname)
+                                    val_font_info['font_size'].add(character.size)
 
-    words_lines = []
-    current_line = []
-    previous_y1 = None
+                                index += 1
 
-    for char in sorted_chars:
-        # Извлекаем координаты символа
-        x0, y0, x1, y1 = char['x0'], char['y0'], char['x1'], char['y1']
+                        key_done = False
 
-        # Определяем перенос строки
-        if previous_y1 is not None and y0 > previous_y1:  # Новая строка
-            if current_line:
-                words_lines.append(''.join(current_line))
-                current_line = []
+                        key_font_info['font_name'] = key_font_info['font_name'].pop()
+                        key_font_info['font_size'] = str(round(key_font_info['font_size'].pop(), 3))
 
-        # Добавляем символ в текущую строку
-        current_line.append(char['text'])
-        previous_y1 = y1
+                        if value:
+                            val_font_info['font_name'] = str(next(iter(val_font_info['font_name'])))
+                            val_font_info['font_size'] = str(round(next(iter(val_font_info['font_size'])), 3))
+                        else:
+                            val_font_info['font_name'] = ''
+                            val_font_info['font_size'] = ''
 
-    # Добавляем последнюю строку
-    if current_line:
-        words_lines.append(''.join(current_line))
+                        data['body'][key] = {
+                            'value': value,
+                            'type_value': determine_value_type(value),
+                            'type_key': determine_value_type(key),
+                            'key_font_info': key_font_info,
 
-    return words_lines
+                            'val_font_info': val_font_info,
+                            'separator': separator,
+                            'coordinates': coordinates,
+                        }
+
+    return data
 
 
 def extract_data(pdf_path):
@@ -232,6 +267,7 @@ def extract_data(pdf_path):
                 data['body'][key] = {
                     'value': val,
                     'type_value': determine_value_type(val),
+                    'type_key': determine_value_type(key),
                     'separator': sep,
                     'key_font': page_details.get(key),
                     'val_font': page_details.get(val),
@@ -266,18 +302,17 @@ def get_project_root() -> str:
 
 
 if __name__ == '__main__':
-
     # Пример использования
     pdf_path = 'test_task.pdf'
     data = extract_text_with_font_details(pdf_path)
-    words_and_lines = group_characters_into_words_and_lines(data)
 
     text_blocks = extract_data(pdf_path)
-    # for k in text_blocks:
-    #     print(k)
 
-    for k, v in text_blocks.items():
-        print(f"{k}: {v}")
+    # for k, v in text_blocks.items():
+    #     print(f"{k}: {v}")
+    #
+    with open('result_1.json', 'w') as fp:
+        json.dump(data, fp)
 
-    with open('result_2.json', 'w') as fp:
-        json.dump(text_blocks, fp)
+    # with open('result_1.json', 'w') as fp:
+    #     json.dump(text_blocks, fp)
