@@ -1,5 +1,5 @@
 import unittest
-from helpers.helpers import determine_value_type
+from helper.helpers import determine_value_type
 
 
 class TestDateDetect(unittest.TestCase):
