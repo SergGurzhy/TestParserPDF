@@ -18,7 +18,7 @@
       },
       "key_font_info": {
         "font_name": "AAAAAA+Arial-BoldMT",
-        "font_size": "10.509"
+        "font_size": "10.51"
       },
       "val_font_info": {
         "font_name": "",
@@ -26,12 +26,12 @@
       },
       "separator": "",
       "coordinates": {
-        "x0": 6.005,
-        "y0": 264.969
+        "x0": "6.005",
+        "y0": "264.969"
       }
     },
     "PN": {
-      "value": " tst",
+      "value": " tst ",
       "type_value": {
         "type": "string",
         "pattern": "^[a-z]+$"
@@ -45,17 +45,17 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_name": "MRRJAZ+Arial-BoldMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 233.327
+        "x0": "13.512",
+        "y0": "233.327"
       }
     },
     "DESCRIPTION": {
-      "value": " PART",
+      "value": " PART ",
       "type_value": {
         "type": "string",
         "pattern": "^[A-Z]+$"
@@ -69,17 +69,17 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "WGRRKF+ArialMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 222.067
+        "x0": "13.512",
+        "y0": "222.067"
       }
     },
     "LOCATION": {
-      "value": " 111",
+      "value": " 555 ",
       "type_value": {
         "type": "number",
         "pattern": "^\\d+$"
@@ -93,13 +93,13 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "WGRRKF+ArialMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 210.807
+        "x0": "13.512",
+        "y0": "210.807"
       }
     },
     "RECEIVER#": {
@@ -110,24 +110,24 @@
       },
       "type_key": {
         "type": "string",
-        "pattern": ""
+        "pattern": "^[A-Z#]+$"
       },
       "key_font_info": {
         "font_name": "AAAAAA+Arial-BoldMT",
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "AAAAAA+Arial-BoldMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 199.547
+        "x0": "13.512",
+        "y0": "199.547"
       }
     },
     "EXP DATE": {
-      "value": " 13.04.2022",
+      "value": " 22.04.2023 ",
       "type_value": {
         "type": "date",
         "pattern": "%d.%m.%Y"
@@ -141,17 +141,17 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "WGRRKF+ArialMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 188.287
+        "x0": "13.512",
+        "y0": "188.287"
       }
     },
     "CERT SOURCE": {
-      "value": " wef",
+      "value": " wef ",
       "type_value": {
         "type": "string",
         "pattern": "^[a-z]+$"
@@ -165,113 +165,17 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "WGRRKF+ArialMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 177.027
-      }
-    },
-    "SN": {
-      "value": " 123123",
-      "type_value": {
-        "type": "number",
-        "pattern": "^\\d+$"
-      },
-      "type_key": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "key_font_info": {
-        "font_name": "AAAAAA+Arial-BoldMT",
-        "font_size": "7.507"
-      },
-      "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
-        "font_size": "7.507"
-      },
-      "separator": ":",
-      "coordinates": {
-        "x0": 141.5,
-        "y0": 233.327
-      }
-    },
-    "CONDITION": {
-      "value": " FN",
-      "type_value": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "type_key": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "key_font_info": {
-        "font_name": "AAAAAA+Arial-BoldMT",
-        "font_size": "7.507"
-      },
-      "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
-        "font_size": "7.507"
-      },
-      "separator": ":",
-      "coordinates": {
-        "x0": 141.5,
-        "y0": 210.807
-      }
-    },
-    "UOM": {
-      "value": " EA",
-      "type_value": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "type_key": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "key_font_info": {
-        "font_name": "AAAAAA+Arial-BoldMT",
-        "font_size": "7.507"
-      },
-      "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
-        "font_size": "7.507"
-      },
-      "separator": ":",
-      "coordinates": {
-        "x0": 141.5,
-        "y0": 199.547
-      }
-    },
-    "PO": {
-      "value": " P101",
-      "type_value": {
-        "type": "string",
-        "pattern": "^[A-Z0-9]+$"
-      },
-      "type_key": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "key_font_info": {
-        "font_name": "AAAAAA+Arial-BoldMT",
-        "font_size": "7.507"
-      },
-      "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
-        "font_size": "7.507"
-      },
-      "separator": ":",
-      "coordinates": {
-        "x0": 141.5,
-        "y0": 188.287
+        "x0": "13.512",
+        "y0": "177.027"
       }
     },
     "REC.DATE": {
-      "value": " 18.04.2022",
+      "value": " 18.04.2022 ",
       "type_value": {
         "type": "date",
         "pattern": "%d.%m.%Y"
@@ -285,61 +189,37 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "WGRRKF+ArialMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 165.767
-      }
-    },
-    "MFG": {
-      "value": " efwfe",
-      "type_value": {
-        "type": "string",
-        "pattern": "^[a-z]+$"
-      },
-      "type_key": {
-        "type": "string",
-        "pattern": "^[A-Z]+$"
-      },
-      "key_font_info": {
-        "font_name": "AAAAAA+Arial-BoldMT",
-        "font_size": "7.507"
-      },
-      "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
-        "font_size": "7.507"
-      },
-      "separator": ":",
-      "coordinates": {
-        "x0": 141.5,
-        "y0": 165.767
+        "x0": "13.512",
+        "y0": "165.767"
       }
     },
     "BATCH# ": {
-      "value": " 1",
+      "value": " 1 ",
       "type_value": {
         "type": "number",
         "pattern": "^\\d+$"
       },
       "type_key": {
         "type": "string",
-        "pattern": ""
+        "pattern": "^[A-Z#]+$"
       },
       "key_font_info": {
         "font_name": "AAAAAA+Arial-BoldMT",
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "WGRRKF+ArialMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 154.507
+        "x0": "13.512",
+        "y0": "154.507"
       }
     },
     "REMARK": {
@@ -362,8 +242,8 @@
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 143.247
+        "x0": "13.512",
+        "y0": "143.247"
       }
     },
     "TAGGED BY": {
@@ -386,8 +266,8 @@
       },
       "separator": ":",
       "coordinates": {
-        "x0": 13.512,
-        "y0": 131.987
+        "x0": "13.512",
+        "y0": "131.987"
       }
     },
     "Qty": {
@@ -410,8 +290,128 @@
       },
       "separator": ":",
       "coordinates": {
-        "x0": 17.265,
-        "y0": 87.698
+        "x0": "17.265",
+        "y0": "87.698"
+      }
+    },
+    "SN": {
+      "value": " 123123",
+      "type_value": {
+        "type": "number",
+        "pattern": "^\\d+$"
+      },
+      "type_key": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "key_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "val_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "separator": ":",
+      "coordinates": {
+        "x0": "141.5",
+        "y0": "233.327"
+      }
+    },
+    "CONDITION": {
+      "value": " FN",
+      "type_value": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "type_key": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "key_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "val_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "separator": ":",
+      "coordinates": {
+        "x0": "141.5",
+        "y0": "210.807"
+      }
+    },
+    "UOM": {
+      "value": " EA",
+      "type_value": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "type_key": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "key_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "val_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "separator": ":",
+      "coordinates": {
+        "x0": "141.5",
+        "y0": "199.547"
+      }
+    },
+    "PO": {
+      "value": " P101",
+      "type_value": {
+        "type": "string",
+        "pattern": "^[A-Z0-9]+$"
+      },
+      "type_key": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "key_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "val_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "separator": ":",
+      "coordinates": {
+        "x0": "141.5",
+        "y0": "188.287"
+      }
+    },
+    "MFG": {
+      "value": " efwfe",
+      "type_value": {
+        "type": "string",
+        "pattern": "^[a-z]+$"
+      },
+      "type_key": {
+        "type": "string",
+        "pattern": "^[A-Z]+$"
+      },
+      "key_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "val_font_info": {
+        "font_name": "AAAAAA+Arial-BoldMT",
+        "font_size": "7.507"
+      },
+      "separator": ":",
+      "coordinates": {
+        "x0": "141.5",
+        "y0": "165.767"
       }
     },
     "DOM": {
@@ -429,13 +429,13 @@
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "AAAAAA+Arial-BoldMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 141.5,
-        "y0": 154.507
+        "x0": "141.5",
+        "y0": "154.507"
       }
     },
     "LOT# ": {
@@ -446,20 +446,20 @@
       },
       "type_key": {
         "type": "string",
-        "pattern": ""
+        "pattern": "^[A-Z#]+$"
       },
       "key_font_info": {
         "font_name": "AAAAAA+Arial-BoldMT",
         "font_size": "7.507"
       },
       "val_font_info": {
-        "font_name": "BAAAAA+ArialMT",
+        "font_name": "AAAAAA+Arial-BoldMT",
         "font_size": "7.507"
       },
       "separator": ":",
       "coordinates": {
-        "x0": 141.5,
-        "y0": 143.247
+        "x0": "141.5",
+        "y0": "143.247"
       }
     },
     "NOTES": {
@@ -482,8 +482,8 @@
       },
       "separator": ":",
       "coordinates": {
-        "x0": 141.5,
-        "y0": 131.987
+        "x0": "141.5",
+        "y0": "131.987"
       }
     },
     "inspection notes": {
@@ -506,8 +506,8 @@
       },
       "separator": "",
       "coordinates": {
-        "x0": 146.004,
-        "y0": 119.226
+        "x0": "146.004",
+        "y0": "119.225"
       }
     }
   }
