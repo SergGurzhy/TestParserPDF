@@ -5,7 +5,7 @@ from pdfminer.pdfparser import PDFParser
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfpage import PDFPage
 from pdfminer.layout import LTTextContainer, LTChar
-from helpers.helpers import determine_value_type
+from helper.helpers import determine_value_type
 
 
 def get_pdf_page_size(pdf_path) -> tuple:
@@ -101,7 +101,6 @@ def get_data_from_pdf(pdf_path):
                             'type_value': determine_value_type(value),
                             'type_key': determine_value_type(key),
                             'key_font_info': key_font_info,
-
                             'val_font_info': val_font_info,
                             'separator': separator,
                             'coordinates': coordinates,
@@ -111,7 +110,7 @@ def get_data_from_pdf(pdf_path):
 
 
 if __name__ == '__main__':
-    pdf_path = 'tests/tests_data/test_task_1.pdf'
+    pdf_path = 'tests/data_for_tests/test_task_1.pdf'
     data = get_data_from_pdf(pdf_path)
 
     with open('result.json', 'w') as fp:
