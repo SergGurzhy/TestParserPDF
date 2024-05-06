@@ -109,9 +109,9 @@ def get_data_from_pdf(pdf_path):
     return data
 
 
-if __name__ == '__main__':
-    pdf_path = 'tests/data_for_tests/test_task_1.pdf'
-    data = get_data_from_pdf(pdf_path)
-
-    with open('result.json', 'w') as fp:
-        json.dump(data, fp)
+# if __name__ == '__main__':
+#     pdf_path = 'tests/data_for_tests/test_task_1.pdf'
+#     data = get_data_from_pdf(pdf_path)
+#
+#     with open('result.json', 'w') as fp:
+#         json.dump(data, fp)
